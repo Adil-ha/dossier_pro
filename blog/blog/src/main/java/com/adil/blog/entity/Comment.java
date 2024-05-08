@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @Entity
-@Table(name = "comments")
+@Table(name = "T_Comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

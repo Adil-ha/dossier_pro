@@ -19,6 +19,7 @@ public class Article {
     @JoinColumn(name = "A_id")
     private Long id;
 
+    @Column(unique = true)
     @JoinColumn(name = "A_title")
     private String title;
 

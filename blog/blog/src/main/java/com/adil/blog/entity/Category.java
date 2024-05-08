@@ -19,6 +19,7 @@ public class Category {
     @JoinColumn(name = "C_id")
     private Long id;
 
+    @Column(unique = true)
     @JoinColumn(name = "C_name")
     private String name;
 
