@@ -43,7 +43,7 @@ public class DataLoader implements CommandLineRunner {
             User user1 = User.builder()
                     .name("John Doe")
                     .email("admin@example.com")
-                    .password(passwordEncoder.encode("123"))
+                    .password(passwordEncoder.encode("admin"))
                     .role(UserRole.ROLE_ADMIN)
                     .build();
 

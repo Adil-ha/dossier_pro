@@ -38,7 +38,9 @@ public class UserService implements UserDetailsService {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return
-                this.userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("Aucun utilisateur ne correspond à cette identifiant"));
+                this.userRepository
+                        .findByEmail(username)
+                        .orElseThrow(()-> new UsernameNotFoundException("Aucun utilisateur ne correspond à cette identifiant"));
 
     }
 }
