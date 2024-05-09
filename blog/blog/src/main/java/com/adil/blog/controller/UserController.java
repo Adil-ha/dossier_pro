@@ -2,6 +2,7 @@ package com.adil.blog.controller;
 
 import com.adil.blog.dto.AuthenticationDTO;
 import com.adil.blog.entity.User;
+import com.adil.blog.security.JwtService;
 import com.adil.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +25,8 @@ import java.util.Map;
 public class UserController {
 
     private AuthenticationManager authenticationManager;
-
     private UserService userService;
+    private JwtService jwtService;
     @PostMapping(path= "/register")
     public void register(@RequestBody User user){
         log.info("Inscription");
@@ -37,7 +38,10 @@ public class UserController {
         final Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password())
         );
-        log.info("resultat {}", authenticate.isAuthenticated());
+        if(authenticate.isAuthenticated()){
+            return this.jwtService.generate(authenticationDTO.username());
+        }
+
         return null;
 
     }
