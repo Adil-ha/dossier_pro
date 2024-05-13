@@ -1,6 +1,8 @@
 package com.adil.blog.service;
 
 
+import com.adil.blog.Exception.DuplicateEmailException;
+import com.adil.blog.Exception.InvalidEmailException;
 import com.adil.blog.entity.User;
 import com.adil.blog.entity.UserRole;
 import com.adil.blog.repository.UserRepository;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 
 @AllArgsConstructor
@@ -22,12 +25,15 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public void register(User user){
-        if(!user.getEmail().contains("@")){
-            throw new RuntimeException("Votre est email est invalide");
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        if(!pattern.matcher(user.getEmail()).matches()){
+            throw new InvalidEmailException("Votre est email est invalide");
         }
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
         if(optionalUser.isPresent()){
-            throw new RuntimeException("Votre mail existe déjà");
+            throw new DuplicateEmailException("Votre mail existe déjà");
         }
         String cryptPassword = this.passwordEncoder.encode(user.getPassword());
         user.setPassword(cryptPassword);

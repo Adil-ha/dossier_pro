@@ -2,8 +2,10 @@ package com.adil.blog.service;
 
 
 import com.adil.blog.entity.Comment;
+import com.adil.blog.entity.User;
 import com.adil.blog.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class CommentService {
     }
 
     public Comment createComment(Comment comment) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setUser(user);
         return commentRepository.save(comment);
     }
 

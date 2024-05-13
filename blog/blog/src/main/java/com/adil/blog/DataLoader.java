@@ -38,10 +38,9 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try{
 
-
             // Ajout des utilisateurs
             User user1 = User.builder()
-                    .name("John Doe")
+                    .name("Admin")
                     .email("admin@example.com")
                     .password(passwordEncoder.encode("admin"))
                     .role(UserRole.ROLE_ADMIN)

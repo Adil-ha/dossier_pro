@@ -5,13 +5,14 @@ import com.adil.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
@@ -28,12 +29,14 @@ public class CategoryController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         Category savedCategory = categoryService.createCategory(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
         Optional<Category> category = categoryService.updateCategory(id, updatedCategory);
@@ -41,6 +44,7 @@ public class CategoryController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         boolean deleted = categoryService.deleteCategory(id);

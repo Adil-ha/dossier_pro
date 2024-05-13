@@ -6,13 +6,14 @@ import com.adil.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/articles")
+@RequestMapping("/articles")
 public class ArticleControlleur {
     @Autowired
     private ArticleService articleService;
@@ -29,12 +30,14 @@ public class ArticleControlleur {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         Article savedArticle = articleService.createArticle(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
         Optional<Article> article = articleService.updateArticle(id, updatedArticle);
@@ -42,6 +45,7 @@ public class ArticleControlleur {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         boolean deleted = articleService.deleteArticle(id);
