@@ -1,13 +1,12 @@
 package com.adil.blog.service;
 
 
-import com.adil.blog.Exception.DuplicateEmailException;
-import com.adil.blog.Exception.InvalidEmailException;
+import com.adil.blog.exception.DuplicateEmailException;
+import com.adil.blog.exception.InvalidEmailException;
 import com.adil.blog.entity.User;
 import com.adil.blog.entity.UserRole;
 import com.adil.blog.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,5 +47,9 @@ public class UserService implements UserDetailsService {
                         .findByEmail(username)
                         .orElseThrow(()-> new UsernameNotFoundException("Aucun utilisateur ne correspond à cette identifiant"));
 
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
     }
 }

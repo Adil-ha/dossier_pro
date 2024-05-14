@@ -1,4 +1,4 @@
-package com.adil.blog.Exception;
+package com.adil.blog.exception;
 
 public class InvalidEmailException extends RuntimeException{
     public InvalidEmailException(String message) {

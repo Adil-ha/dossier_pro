@@ -1,4 +1,4 @@
-package com.adil.blog.Exception;
+package com.adil.blog.exception;
 
 public class DuplicateEmailException extends RuntimeException{
     public DuplicateEmailException(String message) {

@@ -45,4 +45,10 @@ public class ArticleService {
         }
         return false;
     }
+
+    public List<Article> getArticlesByCategory(String categoryName) {
+        return articleRepository.findByCategoryName(categoryName);
+    }
+
+
 }

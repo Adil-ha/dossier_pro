@@ -1,7 +1,7 @@
 package com.adil.blog.controller.advice;
 
-import com.adil.blog.Exception.DuplicateEmailException;
-import com.adil.blog.Exception.InvalidEmailException;
+import com.adil.blog.exception.DuplicateEmailException;
+import com.adil.blog.exception.InvalidEmailException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ProblemDetail;

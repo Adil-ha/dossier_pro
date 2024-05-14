@@ -1,7 +1,9 @@
 package com.adil.blog.controller;
 
 
+import com.adil.blog.dto.ArticleDTO;
 import com.adil.blog.entity.Article;
+import com.adil.blog.mapper.DtoConverterService;
 import com.adil.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,22 +13,41 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/articles")
-public class ArticleControlleur {
+public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private DtoConverterService dtoConverterService;
+
     @GetMapping
-    public List<Article> getAllArticles() {
-        return articleService.getAllArticles();
+    public List<ArticleDTO> getAllArticles() {
+        List<Article> articles = articleService.getAllArticles();
+        return articles.stream()
+                .map(dtoConverterService::convertToArticleDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public ResponseEntity<List<ArticleDTO>> getArticlesByCategory(@PathVariable String categoryName) {
+        List<Article> articles = articleService.getArticlesByCategory(categoryName);
+        if (articles.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<ArticleDTO> articleDTOs = articles.stream()
+                .map(dtoConverterService::convertToArticleDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(articleDTOs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
+    public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Long id) {
         Optional<Article> article = articleService.getArticleById(id);
-        return article.map(ResponseEntity::ok)
+        return article.map(value -> ResponseEntity.ok(dtoConverterService.convertToArticleDTO(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -51,4 +72,7 @@ public class ArticleControlleur {
         boolean deleted = articleService.deleteArticle(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+
+
 }
