@@ -1,6 +1,7 @@
 package com.adil.blog.service;
 
 
+import com.adil.blog.dto.UserDTO;
 import com.adil.blog.exception.DuplicateEmailException;
 import com.adil.blog.exception.InvalidEmailException;
 import com.adil.blog.entity.User;
@@ -52,4 +53,5 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(Long userId) {
         return userRepository.findById(userId);
     }
+
 }

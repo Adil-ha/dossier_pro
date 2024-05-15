@@ -44,7 +44,7 @@ export const logout = createAsyncThunk(
       console.log("Disconnection successful:", response.data);
       return response.data;
     } catch (error) {
-      console.error("Registration error:", error.response.data);
+      console.error("Logout error:", error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -57,15 +57,28 @@ const authSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
-    builder.addCase(register.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
-    builder.addCase(logout.fulfilled, (state, action) => {
-      state.user = null;
-    });
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload;
+        window.location.href = "/articles";
+      })
+      .addCase(login.pending, (state) => {})
+      .addCase(login.rejected, (state, action) => {
+        state.user = null;
+        console.error("Login error:", action.payload);
+        alert("Échec de la connexion. Veuillez vérifier vos identifiants.");
+      })
+
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(register.pending, (state) => {})
+      .addCase(register.rejected, (state, action) => {})
+      .addCase(logout.fulfilled, (state, action) => {
+        state.user = null;
+      })
+      .addCase(logout.pending, (state) => {})
+      .addCase(logout.rejected, (state, action) => {});
   },
 });
 

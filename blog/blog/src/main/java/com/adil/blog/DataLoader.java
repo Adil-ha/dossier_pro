@@ -5,6 +5,8 @@ import com.adil.blog.repository.ArticleRepository;
 import com.adil.blog.repository.CategoryRepository;
 import com.adil.blog.repository.CommentRepository;
 import com.adil.blog.repository.UserRepository;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +25,8 @@ public class DataLoader implements CommandLineRunner {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    private final Lorem lorem = LoremIpsum.getInstance();
 
     @Autowired
     public DataLoader(UserRepository userRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository, CommentRepository commentRepository, BCryptPasswordEncoder passwordEncoder) {
@@ -74,7 +78,7 @@ public class DataLoader implements CommandLineRunner {
             Article article1 = Article.builder()
                     .title("Les races de chiens les plus populaires")
                     .image("dogs.jpg")
-                    .content("Lorem ipsum dolor sit amet, consectetur adipiscing elit...")
+                    .content(lorem.getParagraphs(3, 5))
                     .createdAt(LocalDate.parse("2024-05-01"))
                     .user(user1)
                     .categories(Collections.singletonList(category1))
@@ -83,7 +87,7 @@ public class DataLoader implements CommandLineRunner {
             Article article2 = Article.builder()
                     .title("Conseils pour prendre soin de votre chat")
                     .image("cat.jpg")
-                    .content("Lorem ipsum dolor sit amet, consectetur adipiscing elit...")
+                    .content(lorem.getParagraphs(3, 5))
                     .createdAt(LocalDate.parse("2024-04-25"))
                     .user(user2)
                     .categories(Collections.singletonList(category2))
@@ -92,7 +96,7 @@ public class DataLoader implements CommandLineRunner {
             Article article3 = Article.builder()
                     .title("Guide pour choisir le bon perroquet")
                     .image("parrot.jpg")
-                    .content("Lorem ipsum dolor sit amet, consectetur adipiscing elit...")
+                    .content(lorem.getParagraphs(3, 5))
                     .createdAt(LocalDate.parse("2024-04-20"))
                     .user(user1)
                     .categories(Collections.singletonList(category3))

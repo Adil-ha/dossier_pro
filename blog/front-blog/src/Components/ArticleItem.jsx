@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import style from './ArticleItem.module.css'; 
+
 
 const ArticleItem = ({ article }) => {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const ArticleItem = ({ article }) => {
 
     return (
         <div className="col-md-4 mb-4">
-            <div className="card h-100">
+            <div className="card h-100" >
                 <img src={`/images/${article.image}`} className="card-img-top" alt={article.title} />
                 <div className="card-body">
                     <h5 className="card-title">{article.title}</h5>

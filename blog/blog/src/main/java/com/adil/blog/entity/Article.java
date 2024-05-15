@@ -26,7 +26,7 @@ public class Article {
     @JoinColumn(name = "A_image")
     private String image;
 
-    @JoinColumn(name = "A_content")
+    @Column(length = 10000, name = "A_content")
     private String content;
 
     @JoinColumn(name = "A_created_at")

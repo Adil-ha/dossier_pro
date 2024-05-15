@@ -61,17 +61,18 @@ export const updateComment = createAsyncThunk(
 // Delete a comment
 export const deleteComment = createAsyncThunk(
   "comments/delete",
-  async ({ articleId, commentId }, { rejectWithValue }) => {
+  async ({ commentId }, { rejectWithValue }) => {
     try {
       const headers = accountService.getToken();
       const response = await axios.delete(
-        `${BASE_API_URL}/articles/${articleId}/comments/${commentId}`,
+        `${BASE_API_URL}/comments/${commentId}`,
         {
           headers,
         }
       );
       return response.data;
     } catch (error) {
+      console.log(commentId);
       console.error("Delete comment error:", error.response.data);
       return rejectWithValue(error.response.data);
     }
