@@ -1,0 +1,23 @@
+# Ignorer les fichiers et répertoires de node
+node_modules
+npm-debug.log
+
+# Ignorer les fichiers de construction
+build
+dist
+
+# Ignorer les fichiers de configuration de l'éditeur
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer les fichiers environnementaux
+.env
