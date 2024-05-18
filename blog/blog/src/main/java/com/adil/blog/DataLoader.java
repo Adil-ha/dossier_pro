@@ -25,7 +25,6 @@ public class DataLoader implements CommandLineRunner {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
     private final Lorem lorem = LoremIpsum.getInstance();
 
     @Autowired
@@ -34,7 +33,6 @@ public class DataLoader implements CommandLineRunner {
         this.categoryRepository = categoryRepository;
         this.articleRepository = articleRepository;
         this.commentRepository = commentRepository;
-
         this.passwordEncoder = passwordEncoder;
     }
 
